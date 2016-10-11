@@ -1,0 +1,40 @@
+{
+  "name": "mithril.component.autosuggest",
+  "version": "0.0.1",
+  "description": "Mithril autosuggest component",
+  "main": "dist/mithril.component.autosuggest.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jsguy/mithril.component.autosuggest.git"
+  },
+  "keywords": [
+    "mithril",
+    "material",
+    "design"
+  ],
+  "author": "jsguy",
+  "license": "MIT",
+  "devDependencies": {
+    "ulib": "*",
+    "grunt": "0.4.x",
+    "grunt-cli": "0.1.9",
+    "grunt-contrib-uglify": "0.2.x",
+    "grunt-contrib-jshint": "0.6.x",
+    "grunt-contrib-qunit": "0.2.x",
+    "grunt-contrib-watch": "0.4.x",
+    "grunt-contrib-concat": "0.3.x"
+  },
+  "bugs": {
+    "url": "https://github.com/jsguy/mithril.component.autosuggest/issues"
+  },
+  "homepage": "https://github.com/jsguy/mithril.component.autosuggest#readme",
+  "dependencies": {
+    "fs-extra": "^0.30.0"
+  },
+  "directories": {
+    "example": "example"
+  }
+}
