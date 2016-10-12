@@ -8,20 +8,20 @@
 	<script src="../src/mithril.component.autosuggest.js"></script>
 	<script src="../lib/mithril.sugartags.js"></script>
 	<script src="../lib/mithril.bindings.js"></script>
-    <script src="../lib/touchit.js"></script>
-
-	<link rel="stylesheet" type="text/css" href="../dist/mithril.component.autosuggest.css">
 
 	<style>
-		body {margin: 0; padding: 0; font-size: 100%; font-family: sans-serif;}
-		.example-surround {width: 100%;}
-		#example {width: 60rem; margin: 0 auto;}
+		/* Super minimal CSS */
+		body {margin: 0; padding: 0; font-size: 100%; font-family: sans-serif;width: 100%;}
+		.example-surround {width: 60rem; margin: 0 auto;}
+		.auto-suggest-item {display: inline-block; min-width: 30rem; background: #f3f3f3; padding: 0.5rem 1rem; cursor: pointer;}
+		.auto-suggest-item:hover {background: #ace;}
 	</style>
 
 </head>
 <body>
 
 <div class="example-surround">
+	<h1>Mithril autosuggest component example</h1>
 	<div id="example"></div>
 </div>
 	
@@ -30,7 +30,7 @@ var Demo = {
 	model: function(){
 		var me = this;
 
-		//	TESTING SEARCH AUTOsuggestR
+		//	Auto suggest data - can use a list of any objects
 		me.names = [
 			{id: 1, name: "John"},
 			{id: 2, name: "Bob"},
@@ -47,28 +47,29 @@ var Demo = {
 		//  Displays an item in the list
 		me.decorator = function(item) {
 			with(m.sugarTags) {
-				return DIV({class: "ac-list-item"}, item.name);
+				return DIV({class: "auto-suggest-item"}, item.name);
 			}
 		};
 
 		//	Matches items based on the given value.
 		//	Note: this'll be server based in an ajax query instead.
-		me.matcher = function(value, cb) {
-			//	Pretend we're async
+		me.matcher = function(value, callback) {
+			//	Pretend we're async - in your code, you can make an ajax request, and use the callback
 			setTimeout(function(){
-				//  When the value changes, update the matches
+				//  Basic filter - when the value changes, update the matches
 				var matches = value === "" ? []:
 					me.names.filter(function(item) {
 						return item.name.toLowerCase().indexOf(value.toLowerCase()) > -1;
 					}, this);
-				cb(matches);
+				callback(matches);
 			}, 220);
 		};
 
+		//	You can do anything with the name object here
 		me.selectedValue = m.p();
 
+		//	You can do anything with the name object here
 		me.selectedValue.subscribe(function(name){
-			//	You can do anything with the name object here
 			console.log('selected', name);
 		});
 	},

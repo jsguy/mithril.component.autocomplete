@@ -24,6 +24,7 @@ var mithrilAutosuggestComponent = function(m){
 			attrs.state.decorator = def(attrs.state.decorator, function(){
 				return DIV({class: attrs.state.cName + "-item"}, item);
 			});
+
 			//	Default rendering
 			attrs.state.render = def(attrs.state.render, function(ctrl){
 				return m('DIV', {className: attrs.state.cName}, [

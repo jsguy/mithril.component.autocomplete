@@ -36,3 +36,6 @@ You need to set the following attributes:
 * **selectedValue** - A property that will be set when the user selects an item from the suggestions
 
 **Note:** See the examples directory for details
+
+**Note2:** There is no CSS included with autosuggest - you'll need to make up your own - see the example
+

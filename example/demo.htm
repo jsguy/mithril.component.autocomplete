@@ -2,35 +2,102 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Mithril slideshow component</title>
+	<title>Mithril autosuggest component</title>
 
     <script src="../lib/mithril.js"></script>
-	<script src="../dist/mithril.component.slideshow.js"></script>
+	<script src="../dist/mithril.component.autosuggest.js"></script>
+	<script src="../lib/mithril.sugartags.js"></script>
 
 	<style>
-		#example {width: 100%; height: 30rem;}
-		body {margin: 0; padding: 0; background: #111; height: 100%; }
+		/* Super minimal CSS */
+		body {margin: 0; padding: 0; font-size: 100%; font-family: sans-serif;width: 100%;}
+		.example-surround {width: 60rem; margin: 0 auto;}
+		.auto-suggest-item {display: inline-block; min-width: 30rem; background: #f3f3f3; padding: 0.5rem 1rem; cursor: pointer;}
+		.auto-suggest-item:hover {background: #ace;}
 	</style>
 
-	<link rel="stylesheet" type="text/css" href="../dist/mithril.component.slideshow.css">
 </head>
 <body>
 
-<div id="example"></div>
+<div class="example-surround">
+	<h1>Mithril autosuggest component example</h1>
+	<div id="example"></div>
+</div>
 	
 <script>
 var Demo = {
+	model: function(){
+		var me = this;
+
+		//	Auto suggest data - can use a list of any objects
+		me.names = [
+			{id: 1, name: "John"},
+			{id: 2, name: "Bob"},
+			{id: 3, name: "Mary"},
+			{id: 4, name: "Larry"},
+			{id: 5, name: "Barry"}
+		];
+
+		//  Returns what we want to display to the user from the item
+		me.displayValue = function(item) {
+			return item.name;
+		};
+
+		//  Displays an item in the list
+		me.decorator = function(item) {
+			with(m.sugarTags) {
+				return DIV({class: "auto-suggest-item"}, item.name);
+			}
+		};
+
+		//	Matches items based on the given value.
+		//	Note: this'll be server based in an ajax query instead.
+		me.matcher = function(value, callback) {
+			//	Pretend we're async - in your code, you can make an ajax request, and use the callback
+			setTimeout(function(){
+				//  Basic filter - when the value changes, update the matches
+				var matches = value === "" ? []:
+					me.names.filter(function(item) {
+						return item.name.toLowerCase().indexOf(value.toLowerCase()) > -1;
+					}, this);
+				callback(matches);
+			}, 220);
+		};
+
+		//	You can do anything with the name object here
+		me.selectedValue = m.p();
+
+		//	You can do anything with the name object here
+		me.selectedValue.subscribe(function(name){
+			console.log('selected', name);
+		});
+	},
+	controller: function() {
+		var me = this;
+		//	Expose the header model
+		me.model = new Demo.model();
+		return me;
+	},
 	view: function(ctrl) {
-		return m.components.mSlideshow({id: "sliders", state: {
-			imgs: m.prop([
-				{src: "img/uboat.jpg"},
-				{src: "img/bridge.jpg"}
-			])
-		}});
+		var o = ctrl.model;
+		with(m.sugarTags){
+			return m("SECTION", [
+				LABEL("Auto-suggest names (try 'r')"),
+				m.components.mAutosuggest({state: {
+					displayValue: o.displayValue,
+					matcher: o.matcher,
+					decorator: o.decorator,
+					selectedValue: o.selectedValue
+				}}),
+				LABEL("Selected object"),
+				DIV({}, JSON.stringify(o.selectedValue()))
+			]);
+		}
 	}
 };
-//initialize
+
 m.mount(document.getElementById("example"), Demo);
+
 </script>
 
 </body>
