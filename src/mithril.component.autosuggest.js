@@ -22,7 +22,7 @@ var mithrilAutosuggestComponent = function(m){
 			});
 			//	Return display of an item in the dropdown
 			attrs.state.decorator = def(attrs.state.decorator, function(){
-				return DIV({class: attrs.state.cName + "-item"}, item);
+				return DIV({className: attrs.state.cName + "-item"}, item);
 			});
 
 			//	Default rendering

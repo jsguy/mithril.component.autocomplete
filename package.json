@@ -1,6 +1,6 @@
 {
   "name": "mithril.component.autosuggest",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Mithril autosuggest component",
   "main": "dist/mithril.component.autosuggest.js",
   "scripts": {
