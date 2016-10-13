@@ -29,7 +29,7 @@ var mithrilAutosuggestComponent = function(m){
 			attrs.state.render = def(attrs.state.render, function(ctrl){
 				return m('DIV', {className: attrs.state.cName}, [
 					m.e('INPUT', {valueInput: ctrl.model.value}),
-					m.e('DIV', {className: attrs.state.cName + "-items"}, 
+					m.e('DIV', {className: attrs.state.cName + "-items", style: {display: (ctrl.model.matches().length > 0? "inherit": "none")} }, 
 						ctrl.model.matches().map(function(item) {
 							return m('DIV', {
 								onclick: function(){
